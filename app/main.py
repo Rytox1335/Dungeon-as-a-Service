@@ -1,26 +1,18 @@
-"""Point d'entrée de l'API Dungeon as a Service.
-
-Lancer le serveur depuis la racine du projet :
-    fastapi dev app/main.py
-Puis ouvrir http://127.0.0.1:8000/docs
-"""
+"""Point d'entrée de l'API Dungeon as a Service."""
 
 from contextlib import asynccontextmanager
 
 from fastapi import FastAPI
 
 from app.database import create_db_and_tables
-
-# TODO (palier 1) : importez ici vos modèles de tables pour que SQLModel les connaisse
-# from app.models.hero import Hero  # noqa: F401
-
-# TODO : importez vos routers
-# from app.routes import heroes
+from app.models.hero import Hero  # noqa: F401
+from app.models.player import Player  # noqa: F401
+from app.routes.auth import router as auth_router
+from app.routes.heroes import router as heroes_router
 
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Exécuté une fois au démarrage du serveur : crée les tables si besoin
     create_db_and_tables()
     yield
 
@@ -32,11 +24,10 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# TODO : branchez vos routers
-# app.include_router(heroes.router)
+app.include_router(auth_router)
+app.include_router(heroes_router)
 
 
 @app.get("/health", tags=["Système"])
 def health() -> dict:
-    """Vérifie que le serveur répond."""
     return {"status": "ok", "message": "Le donjon vous attend..."}
