@@ -1,16 +1,11 @@
-<<<<<<< HEAD
 from __future__ import annotations
 
 from typing import Optional
-=======
-"""Table SQLModel du héros : ce qui est stocké en base SQLite."""
->>>>>>> 539dc06e4bb68b68c8258e17dff40864c4109c31
 
 from sqlmodel import Field, SQLModel
 
 
 class Hero(SQLModel, table=True):
-<<<<<<< HEAD
     id: Optional[int] = Field(default=None, primary_key=True)
     name: str = Field(index=True)
     classe: str = Field(index=True)
@@ -32,18 +27,3 @@ class Hero(SQLModel, table=True):
     @property
     def is_alive(self) -> bool:
         return self.pv > 0
-=======
-    id: int | None = Field(default=None, primary_key=True)
-    nom: str
-    classe: str
-    force: int
-    agilite: int
-    intelligence: int
-    pv: int
-    pv_max: int
-    salle_actuelle: str
-    or_: int = 0
-    # None = aucun combat en cours ; sinon PV actuels du monstre affronté
-    monstre_pv: int | None = None
-    victoire: bool = False
->>>>>>> 539dc06e4bb68b68c8258e17dff40864c4109c31
