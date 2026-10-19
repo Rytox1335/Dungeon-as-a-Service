@@ -33,6 +33,17 @@ app = FastAPI(
 app.include_router(heroes.router)
 
 
+@app.get("/", tags=["Système"])
+def index() -> dict[str, str]:
+    """Présente l'API et ses points d'entrée principaux."""
+    return {
+        "name": "Dungeon as a Service",
+        "message": "Le donjon vous attend...",
+        "docs": "/docs",
+        "health": "/health",
+    }
+
+
 @app.get("/health", tags=["Système"])
 def health() -> dict:
     """Vérifie que le serveur répond."""

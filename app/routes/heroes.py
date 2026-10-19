@@ -4,9 +4,10 @@ from fastapi import APIRouter, Depends
 from sqlmodel import Session
 
 from app.database import get_session
+from app.schemas.combat import AttackResult
 from app.schemas.hero import HeroCreate, HeroRead
 from app.schemas.room import MoveRequest, RoomRead
-from app.services import hero_service, room_service
+from app.services import combat_service, hero_service, room_service
 
 router = APIRouter(prefix="/heroes", tags=["heroes"])
 
@@ -39,3 +40,15 @@ def get_hero_room(hero_id: int, session: Session = Depends(get_session)):
 def move_hero(hero_id: int, data: MoveRequest, session: Session = Depends(get_session)):
     """Déplace le héros et renvoie la nouvelle salle (FT-6)."""
     return room_service.move_hero(session, hero_id, data)
+
+
+@router.post("/{hero_id}/attack", response_model=AttackResult)
+def attack_hero(hero_id: int, session: Session = Depends(get_session)):
+    """Fait jouer un tour de combat (FT-7)."""
+    return combat_service.attaquer(session, hero_id)
+
+
+@router.post("/{hero_id}/rest", response_model=HeroRead)
+async def rest_hero(hero_id: int, session: Session = Depends(get_session)):
+    """Rend ses points de vie au héros après trois secondes (FT-9)."""
+    return await combat_service.se_reposer(session, hero_id)
