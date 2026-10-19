@@ -26,8 +26,10 @@ Depuis la racine du projet (le dossier qui contient `app/`) :
 fastapi dev app/main.py
 ```
 
-Ouvrez ensuite http://127.0.0.1:8000/docs : la route `GET /health` doit répondre
-`{"status": "ok", ...}`. Si c'est le cas, vous êtes prêts.
+Ouvrez ensuite http://127.0.0.1:8000/ pour vérifier que l'API répond et trouver
+les liens vers la documentation (`/docs`) et le contrôle de santé (`/health`).
+La route `GET /health` doit répondre `{"status": "ok", ...}`. Si c'est le cas,
+vous êtes prêts.
 
 ## Structure
 
