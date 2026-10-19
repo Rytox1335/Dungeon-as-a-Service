@@ -11,11 +11,9 @@ from fastapi import FastAPI
 
 from app.database import create_db_and_tables
 
-# TODO (palier 1) : importez ici vos modèles de tables pour que SQLModel les connaisse
-# from app.models.hero import Hero  # noqa: F401
-
-# TODO : importez vos routers
-# from app.routes import heroes
+# Import du modèle pour que SQLModel crée la table au démarrage
+from app.models.hero import Hero  # noqa: F401
+from app.routes import heroes
 
 
 @asynccontextmanager
@@ -32,8 +30,7 @@ app = FastAPI(
     lifespan=lifespan,
 )
 
-# TODO : branchez vos routers
-# app.include_router(heroes.router)
+app.include_router(heroes.router)
 
 
 @app.get("/health", tags=["Système"])
